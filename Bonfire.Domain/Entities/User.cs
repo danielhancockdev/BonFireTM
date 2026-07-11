@@ -8,4 +8,6 @@ public class User
 
     public DateTime CreatedAt { get; set; }
 
+    public ICollection<TaskItem> AssignedTasks { get; set; } = new List<TaskItem>();
+
 }

@@ -12,7 +12,11 @@ public class  TaskItem
 
     public Guid ColumnId { get; set; }
 
+    public Column column { get; set; }
+
     public Guid? AssignedUserId { get; set; }
+
+    public User? user { get; set; }
 
     public TaskPriority Priority { get; set; }
 

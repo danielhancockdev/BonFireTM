@@ -11,4 +11,6 @@ public class Project
     public DateTime CreatedAt { get; set; }
 
     public DateTime UpdatedAt { get; set; }
+
+    public ICollection<Board> Boards { get; set; } = new List<Board>();
 }

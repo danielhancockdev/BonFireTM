@@ -11,4 +11,8 @@ public class Column
     public DateTime CreatedAt { get; set; }
 
     public Guid BoardId { get; set; }
+
+    public Board board { get; set; }
+
+    public ICollection<TaskItem> TaskItems { get; set; } = new List<TaskItem>();
 }

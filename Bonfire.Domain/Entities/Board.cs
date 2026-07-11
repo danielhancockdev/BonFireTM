@@ -11,4 +11,8 @@ public class Board
     public DateTime CreatedAt { get; set; }
 
     public Guid ProjectId { get; set; }
+
+    public Project Project { get; set; } = null!;
+
+    public ICollection<Column> Columns { get; set; } = new List<Column>();
 }
