@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="Bonfire.API/Bonfire.API.csproj" />
+  <Project Path="Bonfire.Application/Bonfire.Application.csproj" />
+  <Project Path="Bonfire.Domain/Bonfire.Domain.csproj" />
+  <Project Path="Bonfire.Infrastructure/Bonfire.Infrastructure.csproj" />
+  <Project Path="Bonfire.Tests/Bonfire.Tests.csproj" />
+</Solution>
