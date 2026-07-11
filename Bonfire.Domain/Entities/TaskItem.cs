@@ -1,12 +1,23 @@
+using Bonfire.Domain.Enums;
+
 namespace Bonfire.Domain.Entities;
 
 public class  TaskItem
 {
     public Guid Id { get; set; }
 
-    public string Name { get; set; }
+    public string Title { get; set; } = string.Empty;
 
-    public GuidId ColumnId { get; set; }
+    public string Description { get; set; } = string.Empty;
 
-    public GuidId AssignedUserId { get; set; }
+    public Guid ColumnId { get; set; }
+
+    public Guid? AssignedUserId { get; set; }
+
+    public TaskPriority Priority { get; set; }
+
+    public DateTime? DueDate { get; set; }
+
+    public DateTime CreatedAt { get; set; }
+
 }
