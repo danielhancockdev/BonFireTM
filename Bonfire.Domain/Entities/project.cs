@@ -12,7 +12,13 @@ public class Project
 
     public DateTime UpdatedAt { get; set; }
 
+    // Foreign Key
+
+    public Guid UserId { get; set; }
+
     // Navigation Properties
+
+    public User User { get; set; }
 
     public ICollection<Board> Boards { get; set; } = new List<Board>();
 }

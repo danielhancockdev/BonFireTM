@@ -18,6 +18,6 @@ public class Comment
 
     public User? User { get; set; }
 
-    public TaskItem? TaskItem
+    public TaskItem? TaskItem { get; set; }
 
 }

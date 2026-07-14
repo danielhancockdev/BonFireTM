@@ -57,15 +57,14 @@ public class BonfireDbContext : DbContext
             .HasMany(u => u.Comments)
             .WithOne(c => c.User)
             .HasForeignKey(c => c.UserId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Restrict);
 
         // User has many TaskItems, TaskItem has one User (Assigned)
-        modelBuilder
-            .Entity<User>()
+        modelBuilder.Entity<User>()
             .HasMany(u => u.TaskItems)
             .WithOne(t => t.AssignedUser)
             .HasForeignKey(t => t.AssignedUserId)
-            .OnDelete(DeleteBehavior.SetNull);       
+            .OnDelete(DeleteBehavior.Restrict);       
     }
 
     public BonfireDbContext(DbContextOptions<BonfireDbContext> options) : base(options)
