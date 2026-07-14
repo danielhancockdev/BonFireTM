@@ -10,7 +10,11 @@ public class Board
 
     public DateTime CreatedAt { get; set; }
 
+    // Foreign Keys
+
     public Guid ProjectId { get; set; }
+
+    // Navigation Properties
 
     public Project Project { get; set; } = null!;
 

@@ -12,5 +12,7 @@ public class Project
 
     public DateTime UpdatedAt { get; set; }
 
+    // Navigation Properties
+
     public ICollection<Board> Boards { get; set; } = new List<Board>();
 }
