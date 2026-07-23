@@ -11,10 +11,10 @@
     <Folder Include="Data\" />
     <Folder Include="Identity\" />
     <Folder Include="Services\" />
-    <Folder Include="Repositories\" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Bonfire.Application\Bonfire.Application.csproj" />
     <ProjectReference Include="..\Bonfire.Domain\Bonfire.Domain.csproj" />
   </ItemGroup>
 
