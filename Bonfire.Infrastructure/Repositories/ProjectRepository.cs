@@ -17,24 +17,27 @@ namespace Bonfire.Infrastructure.Repositories
         {
             return await _context.Projects.ToListAsync();
         }
-        public Task<Project?> GetByIdAsync(Guid id)
+        public async Task<Project?> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _context.Projects.FindAsync(id);
         }
 
-        public Task AddAsync(Project project)
+        public async Task AddAsync(Project project)
         {
-            throw new NotImplementedException();
+            _context.Projects.Add(project);
+            await _context.SaveChangesAsync();
         }
 
-        public Task UpdateAsync(Project project)
+        public async Task UpdateAsync(Project project)
         {
-            throw new NotImplementedException();
+            _context.Projects.Update(project);
+            await _context.SaveChangesAsync();
+        }
+        public async Task DeleteAsync(Project project)
+        {
+            _context.Projects.Remove(project);
+            await _context.SaveChangesAsync();
         }
 
-        public Task DeleteAsync(Project project)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

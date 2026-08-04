@@ -1,5 +1,7 @@
 using Bonfire.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Bonfire.Application.Interfaces;
+using Bonfire.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<BonfireDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Register repositories
+builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 
 // Add services to the container.
 builder.Services.AddControllers();
