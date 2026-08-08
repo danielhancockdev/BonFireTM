@@ -1,0 +1,13 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Bonfire.Application.DTOs.Columns
+{
+    public class CreateColumnDto
+    {
+        public string Name { get; set; } = string.Empty;
+        public int Position { get; set; }
+        public Guid BoardId { get; set; }
+    }
+}

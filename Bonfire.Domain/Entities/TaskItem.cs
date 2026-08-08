@@ -31,5 +31,4 @@ public class  TaskItem
     public ICollection<Comment> Comments { get; set; } = new List<Comment>();
 
     public ICollection<Label> Labels { get; set; } = new List<Label>();
-
 }
