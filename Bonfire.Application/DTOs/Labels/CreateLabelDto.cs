@@ -4,7 +4,9 @@ using System.Text;
 
 namespace Bonfire.Application.DTOs.Labels
 {
-    internal class CreateLabelDto
+    public class CreateLabelDto
     {
+        public string Name { get; set; } = string.Empty;
+        public string Color { get; set; } = string.Empty;
     }
 }

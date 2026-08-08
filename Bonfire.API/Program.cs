@@ -2,6 +2,7 @@ using Bonfire.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Bonfire.Application.Interfaces;
 using Bonfire.Infrastructure.Repositories;
+using Bonfire.Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,9 @@ builder.Services.AddDbContext<BonfireDbContext>(options =>
 
 // Register repositories
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
+
+// Register Application Services
+builder.Services.AddScoped<IProjectService, ProjectService>();
 
 // Add services to the container.
 builder.Services.AddControllers();

@@ -4,7 +4,10 @@ using System.Text;
 
 namespace Bonfire.Application.DTOs.Comments
 {
-    internal class CommentSummaryDto
+    public class CommentSummaryDto
     {
+        public Guid Id { get; set; }
+        public string Content { get; set; } = string.Empty;
+        public DateTime CreatedAt { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Bonfire.Domain.Enums;
 
 namespace Bonfire.Application.DTOs.TaskItems
 {

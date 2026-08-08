@@ -1,7 +1,6 @@
-﻿using Bonfire.Application.Interfaces;
-using Bonfire.Domain.Entities;
+﻿using Bonfire.Application.DTOs.Projects;
+using Bonfire.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Bonfire.Application.DTOs;
 
 namespace Bonfire.API.Controllers
 {
@@ -9,24 +8,25 @@ namespace Bonfire.API.Controllers
     [ApiController]
     public class ProjectsController : ControllerBase
     {
-        private readonly IProjectRepository _repository;
+        private readonly IProjectService _service;
 
-        public ProjectsController(IProjectRepository repository)
+        public ProjectsController(IProjectService service)
         {
-            _repository = repository;
+            _service = service;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var projects = await _repository.GetAllAsync();
+            var projects = await _service.GetAllAsync();
+
             return Ok(projects);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var project = await _repository.GetByIdAsync(id);
+            var project = await _service.GetByIdAsync(id);
 
             if (project == null)
             {
@@ -39,13 +39,7 @@ namespace Bonfire.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateProjectDto request)
         {
-            var project = new Project
-            {
-                Name = request.Name,
-                Description = request.Description
-            };
-
-            await _repository.AddAsync(project);
+            var project = await _service.CreateAsync(request);
 
             return CreatedAtAction(
                 nameof(GetById),
@@ -53,23 +47,17 @@ namespace Bonfire.API.Controllers
                 project);
         }
 
-
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(Guid id, Project project)
+        public async Task<IActionResult> Update(
+            Guid id,
+            UpdateProjectDto request)
         {
-            if (id != project.Id)
-            {
-                return BadRequest("Project ID does not match.");
-            }
+            var updated = await _service.UpdateAsync(id, request);
 
-            var existingProject = await _repository.GetByIdAsync(id);
-
-            if (existingProject == null)
+            if (!updated)
             {
                 return NotFound();
             }
-
-            await _repository.UpdateAsync(project);
 
             return NoContent();
         }
@@ -77,17 +65,16 @@ namespace Bonfire.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var project = await _repository.GetByIdAsync(id);
+            var deleted = await _service.DeleteAsync(id);
 
-            if (project == null)
+            if (!deleted)
             {
                 return NotFound();
             }
 
-            await _repository.DeleteAsync(project);
-
             return NoContent();
         }
-
     }
 }
+
+
