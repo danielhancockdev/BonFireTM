@@ -2,7 +2,7 @@
 using Bonfire.Application.Interfaces;
 
 
-namespace Bonfire.Application.Services
+namespace Bonfire.Infrastructure.Services
 {
     public class PasswordHasher : IPasswordHasher
     {

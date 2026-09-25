@@ -5,7 +5,7 @@ using System.Text;
 namespace Bonfire.Application.DTOs.Users
 {
 
-    public class LoginDto
+    public class LoginUserDto
     {
         public string Email { get; set; } = string.Empty;
 

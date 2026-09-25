@@ -38,5 +38,22 @@ namespace Bonfire.Application.Services
             };
             await _repository.AddAsync(user);
         }
+
+        public async Task LoginUserAsync(LoginUserDto loginUserDto)
+        {
+            var existingUser = await _repository.GetUserByEmailAsync(loginUserDto.Email);
+            if (existingUser == null)
+            {
+                throw new InvalidOperationException("Login failed. Invalid email or password");
+            }
+            var passwordIsValid = _passwordHasher.VerifyPassword(
+                loginUserDto.Password,
+                existingUser.PasswordHash);
+            if (!passwordIsValid)
+            { 
+                throw new InvalidOperationException("Login failed. Invalid email or password");
+            }
+        }
+        
     }
 }

@@ -7,10 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Configuration\" />
     <Folder Include="Data\" />
     <Folder Include="Identity\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>
