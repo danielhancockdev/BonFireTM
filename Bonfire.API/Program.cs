@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Bonfire.Application.Interfaces;
 using Bonfire.Infrastructure.Repositories;
 using Bonfire.Application.Services;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,8 @@ builder.Services.AddDbContext<BonfireDbContext>(options =>
 
 // Register repositories
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 
 // Register Application Services
 builder.Services.AddScoped<IProjectService, ProjectService>();
