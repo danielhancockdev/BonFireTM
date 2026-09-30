@@ -9,12 +9,14 @@ namespace Bonfire.Application.Services
     {
         private readonly IUserRepository _repository;
         private readonly IPasswordHasher _passwordHasher;
+        private readonly IJwtService _jwtService;
 
 
-        public UserService(IUserRepository repository, IPasswordHasher passwordHasher)
+        public UserService(IUserRepository repository, IPasswordHasher passwordHasher, IJwtService jwtService)
         {
             _repository = repository;
             _passwordHasher = passwordHasher;
+            _jwtService = jwtService;
         }
 
         
@@ -39,7 +41,7 @@ namespace Bonfire.Application.Services
             await _repository.AddAsync(user);
         }
 
-        public async Task LoginUserAsync(LoginUserDto loginUserDto)
+        public async Task<LoginResponseDto> LoginUserAsync(LoginUserDto loginUserDto)
         {
             var existingUser = await _repository.GetUserByEmailAsync(loginUserDto.Email);
             if (existingUser == null)
@@ -53,7 +55,10 @@ namespace Bonfire.Application.Services
             { 
                 throw new InvalidOperationException("Login failed. Invalid email or password");
             }
+            return _jwtService.GenerateToken(
+        existingUser.Id,
+        existingUser.Email);
+
         }
-        
     }
 }

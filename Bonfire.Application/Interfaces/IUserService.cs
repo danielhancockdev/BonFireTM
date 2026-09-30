@@ -6,6 +6,6 @@ namespace Bonfire.Application.Interfaces
     {
         Task RegisterAsync(RegisterUserDto request);
 
-        Task LoginUserAsync(LoginUserDto request);
+        Task<LoginResponseDto> LoginUserAsync(LoginUserDto request);
     }
 }

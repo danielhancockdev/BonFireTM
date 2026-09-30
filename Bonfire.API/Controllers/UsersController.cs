@@ -25,8 +25,8 @@ namespace Bonfire.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> LoginUser(LoginUserDto request)
         {
-            await _service.LoginUserAsync(request);
-            return StatusCode(201);
+            var response = await _service.LoginUserAsync(request);
+            return Ok(response);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Bonfire.Application.DTOs.Users;
 using Bonfire.Application.Interfaces;
 using Bonfire.Infrastructure.Configuration;
 using Microsoft.Extensions.Options;
@@ -17,7 +18,7 @@ namespace Bonfire.Infrastructure.Services
             _settings = options.Value;
         }
 
-        public string GenerateToken(Guid userId, string email)
+        public LoginResponseDto GenerateToken(Guid userId, string email)
         {
             var claims = new[]
             {
@@ -31,15 +32,21 @@ namespace Bonfire.Infrastructure.Services
             var credentials = new SigningCredentials(
                 key,
                 SecurityAlgorithms.HmacSha256);
-
+            var expiresAt = DateTime.UtcNow.AddHours(1);
             var token = new JwtSecurityToken(
                 issuer: _settings.Issuer,
                 audience: _settings.Audience,
                 claims: claims,
-                expires: DateTime.UtcNow.AddHours(1),
+                expires: expiresAt,
                 signingCredentials: credentials);
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            var tokenString =  new JwtSecurityTokenHandler().WriteToken(token);
+
+            return new LoginResponseDto
+            {
+                Token = tokenString,
+                ExpiresAt = expiresAt
+            };
 
         }
     }

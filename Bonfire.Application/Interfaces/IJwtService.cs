@@ -1,8 +1,10 @@
-﻿namespace Bonfire.Application.Interfaces
+﻿using Bonfire.Application.DTOs.Users;
+
+namespace Bonfire.Application.Interfaces
 {
     public interface IJwtService
     {
-        string GenerateToken(Guid userId, string email);
+        LoginResponseDto GenerateToken(Guid userId, string email);
 
     }
 }
