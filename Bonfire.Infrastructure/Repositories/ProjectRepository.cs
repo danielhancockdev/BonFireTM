@@ -19,7 +19,7 @@ namespace Bonfire.Infrastructure.Repositories
         }
         public async Task<Project?> GetByIdAsync(Guid id)
         {
-            return await _context.Projects.FindAsync(id);
+            return await _context.Projects.Include(p => p.Members).FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task AddAsync(Project project)

@@ -53,8 +53,7 @@ public class ProjectService : IProjectService
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow,
             // temp user fix for testing
-            UserId = Guid.Parse("3BFB73FB-248B-40EF-84C2-AC53A9BB49A1")
-
+            OwnerId = Guid.Parse("3BFB73FB-248B-40EF-84C2-AC53A9BB49A1")
         };
 
         await _repository.AddAsync(project);
@@ -65,7 +64,8 @@ public class ProjectService : IProjectService
             Name = project.Name,
             Description = project.Description,
             CreatedAt = project.CreatedAt,
-            UpdatedAt = project.UpdatedAt
+            UpdatedAt = project.UpdatedAt,
+            OwnerId = project.OwnerId
 
         };
     }

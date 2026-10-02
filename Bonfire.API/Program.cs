@@ -8,6 +8,7 @@ using Bonfire.Infrastructure.Data;
 using Bonfire.Infrastructure.Repositories;
 using Bonfire.Infrastructure.Services;
 using Bonfire.Infrastructure.Configuration;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,7 +22,6 @@ builder.Services.AddDbContext<BonfireDbContext>(options =>
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
-
 // Register Application Services
 builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<IUserService, UserService>();
@@ -29,10 +29,10 @@ builder.Services.AddScoped<IUserService, UserService>();
 // Register Infrastructure Services
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
 
 // Register Configuration Settings
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
-
 
 // Add services to the container.
 builder.Services.AddControllers();

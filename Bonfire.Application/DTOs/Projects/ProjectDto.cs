@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Bonfire.Domain.Entities;
+using Bonfire.Application.DTOs.Users;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -15,5 +17,10 @@ namespace Bonfire.Application.DTOs.Projects
         public DateTime CreatedAt { get; set; }
 
         public DateTime UpdatedAt { get; set; }
+
+        public Guid OwnerId { get; set; }
+
+        public ICollection<UserDto> Members { get; set; } = new List<UserDto>();
     }
 }
+

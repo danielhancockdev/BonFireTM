@@ -45,12 +45,18 @@ public class BonfireDbContext : DbContext
             .HasMany(t  => t.Labels)
             .WithMany(l => l.TaskItems);
 
-        // User has many Projects, Project has one User (Owner)
+        // User has many Projects, Project has one User(Owner) Many User(Members)
         modelBuilder.Entity<User>()
-            .HasMany(u => u.Projects)
-            .WithOne(p => p.User)
-            .HasForeignKey(p => p.UserId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .HasMany(u => u.OwnedProjects)
+            .WithOne(p => p.Owner)
+            .HasForeignKey(p => p.OwnerId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // Project Has many User(Members) All with Many Project(Members)
+        modelBuilder.Entity<Project>()
+            .HasMany(p => p.Members)
+            .WithMany(u => u.MemberProjects);
+
 
         // User has many Comments, Comment has one User (Creator)
         modelBuilder.Entity<User>()

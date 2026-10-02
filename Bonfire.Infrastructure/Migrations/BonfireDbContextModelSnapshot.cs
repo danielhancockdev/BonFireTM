@@ -139,15 +139,15 @@ namespace Bonfire.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("OwnerId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("Projects");
                 });
@@ -231,6 +231,21 @@ namespace Bonfire.Infrastructure.Migrations
                     b.ToTable("LabelTaskItem");
                 });
 
+            modelBuilder.Entity("ProjectUser", b =>
+                {
+                    b.Property<Guid>("MemberProjectsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("MembersId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("MemberProjectsId", "MembersId");
+
+                    b.HasIndex("MembersId");
+
+                    b.ToTable("ProjectUser");
+                });
+
             modelBuilder.Entity("Bonfire.Domain.Entities.Board", b =>
                 {
                     b.HasOne("Bonfire.Domain.Entities.Project", "Project")
@@ -274,13 +289,13 @@ namespace Bonfire.Infrastructure.Migrations
 
             modelBuilder.Entity("Bonfire.Domain.Entities.Project", b =>
                 {
-                    b.HasOne("Bonfire.Domain.Entities.User", "User")
-                        .WithMany("Projects")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("Bonfire.Domain.Entities.User", "Owner")
+                        .WithMany("OwnedProjects")
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("Bonfire.Domain.Entities.TaskItem", b =>
@@ -316,6 +331,21 @@ namespace Bonfire.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("ProjectUser", b =>
+                {
+                    b.HasOne("Bonfire.Domain.Entities.Project", null)
+                        .WithMany()
+                        .HasForeignKey("MemberProjectsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Bonfire.Domain.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("MembersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Bonfire.Domain.Entities.Board", b =>
                 {
                     b.Navigation("Columns");
@@ -340,7 +370,7 @@ namespace Bonfire.Infrastructure.Migrations
                 {
                     b.Navigation("Comments");
 
-                    b.Navigation("Projects");
+                    b.Navigation("OwnedProjects");
 
                     b.Navigation("TaskItems");
                 });

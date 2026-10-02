@@ -1,9 +1,13 @@
 ﻿using Bonfire.Application.DTOs.Projects;
 using Bonfire.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
+using System.Security.Claims;
 
 namespace Bonfire.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ProjectsController : ControllerBase
@@ -22,15 +26,34 @@ namespace Bonfire.API.Controllers
 
             return Ok(projects);
         }
-
+        
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
+            // Grab user Id from the JWT
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (userIdClaim == null)
+            {
+                return Unauthorized();
+            }
+
+            var userId = Guid.Parse(userIdClaim);
+
+            // Grab Project by Id
             var project = await _service.GetByIdAsync(id);
 
             if (project == null)
             {
                 return NotFound();
+            }
+
+            var isOwner = project.OwnerId == userId;
+            var isMember = project.Members.Any(member => member.Id == userId);
+
+            if (!isOwner && !isMember)
+            {
+                return Forbid();
             }
 
             return Ok(project);

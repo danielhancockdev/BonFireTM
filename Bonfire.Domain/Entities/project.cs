@@ -14,11 +14,13 @@ public class Project
 
     // Foreign Key
 
-    public Guid UserId { get; set; }
+    public Guid OwnerId { get; set; }
 
     // Navigation Properties
 
-    public User User { get; set; }
+    public User Owner { get; set; } = null!;
+
+    public ICollection<User> Members { get; set; } = new List<User>();
 
     public ICollection<Board> Boards { get; set; } = new List<Board>();
 }

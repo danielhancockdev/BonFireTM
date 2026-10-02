@@ -13,7 +13,9 @@ public class User
 
     // Navigation Properties
 
-    public ICollection<Project> Projects { get; set; } = new List<Project>();
+    public ICollection<Project> OwnedProjects { get; set; } = new List<Project>();
+
+    public ICollection<Project> MemberProjects { get; set; } = new List<Project>();
 
     public ICollection<TaskItem> TaskItems { get; set; } = new List<TaskItem>();
 
